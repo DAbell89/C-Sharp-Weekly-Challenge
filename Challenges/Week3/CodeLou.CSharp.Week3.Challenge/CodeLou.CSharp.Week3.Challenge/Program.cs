@@ -92,13 +92,13 @@ namespace CodeLou.CSharp.Week3.Challenge
                         {//switch statements require a "break;", be careful not to experience this error
                             case ('A'):
                                 var newAppointment = appointmentRepository.Create();
-                                var startDate = RetrieveStartDate();
-                                var startTime = RetrieveStartTime();
-                                newAppointment.startDateTime = new DateTime(startDate.Year, startDate.Month, startDate.Day, startTime.Hour, startTime.Minute, startTime.Second);
+                                var appStartDate = RetrieveStartDate();
+                                var appStartTime = RetrieveStartTime();
+                                newAppointment.startDateTime = new DateTime(appStartDate.Year, appStartDate.Month, appStartDate.Day, appStartTime.Hour, appStartTime.Minute, appStartTime.Second);
 
-                                var endDate = RetrieveEndDate();
-                                var endTime = RetrieveEndTime();
-                                newAppointment.endDateTime = new DateTime(endDate.Year, endDate.Month, endDate.Day, endTime.Hour, endTime.Minute, endTime.Second);
+                                var appEndDate = RetrieveEndDate();
+                                var appEndTime = RetrieveEndTime();
+                                newAppointment.endDateTime = new DateTime(appEndDate.Year, appEndDate.Month, appEndDate.Day, appEndTime.Hour, appEndTime.Minute, appEndTime.Second);
 
                                 Console.WriteLine("Location:");
                                 newAppointment.Location = Console.ReadLine();
@@ -108,9 +108,35 @@ namespace CodeLou.CSharp.Week3.Challenge
                                 break;
                             case ('M'):
                                 var newMeeting = meetingRepository.Create();
+                                var meetStartDate = RetrieveStartDate();
+                                var meetStartTime = RetrieveStartTime();
+                                newMeeting.startDateTime = new DateTime(meetStartDate.Year, meetStartDate.Month, meetStartDate.Day, meetStartTime.Hour, meetStartTime.Minute, meetStartTime.Second);
+
+                                var meetEndDate = RetrieveEndDate();
+                                var meetEndTime = RetrieveEndTime();
+                                newMeeting.endDateTime = new DateTime(meetEndDate.Year, meetEndDate.Month, meetEndDate.Day, meetEndTime.Hour, meetEndTime.Minute, meetEndTime.Second);
+
+                                Console.WriteLine("Location:");
+                                newMeeting.Location = Console.ReadLine();
+                                newMeeting.attendees = RetrieveAttendees();
+
+                                meetingRepository.Update(newMeeting);
                                 break;
                             case ('R'):
                                 var newReminder = reminderRepository.Create();
+                                var remStartDate = RetrieveStartDate();
+                                var remStartTime = RetrieveStartTime();
+                                newReminder.startDateTime = new DateTime(remStartDate.Year, remStartDate.Month, remStartDate.Day, remStartTime.Hour, remStartTime.Minute, remStartTime.Second);
+
+                                var remEndDate = RetrieveEndDate();
+                                var remEndTime = RetrieveEndTime();
+                                newReminder.endDateTime = new DateTime(remEndDate.Year, remEndDate.Month, remEndDate.Day, remEndTime.Hour, remEndTime.Minute, remEndTime.Second);
+
+                                Console.WriteLine("Location:");
+                                newReminder.Location = Console.ReadLine();
+                                newReminder.attendees = RetrieveAttendees();
+
+                                reminderRepository.Update(newReminder);
                                 break;
                             default:
                                 //Note: The $"abc {variable} def" syntax below is new syntactic sugar in C# 6.0 that can be used 
