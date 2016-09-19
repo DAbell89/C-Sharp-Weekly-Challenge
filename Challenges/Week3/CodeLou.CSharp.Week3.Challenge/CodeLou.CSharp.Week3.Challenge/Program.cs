@@ -149,32 +149,61 @@ namespace CodeLou.CSharp.Week3.Challenge
                         break;
                     case ('V'):
                         var appointments = appointmentRepository.GetAllItems();
-                        Console.WriteLine("Appointments:");
-                        foreach (var item in appointments)
-                        {
-                            Console.WriteLine(string.Format("ID: {0}, StartDate: {1}, StartTime: {2}, Location: {3}",
-                                item.Id, item.startDateTime.Date, item.startDateTime.TimeOfDay, item.Location));
-                        }
+                        DisplayAppointments(appointments);
 
                         var meetings = meetingRepository.GetAllItems();
-                        Console.WriteLine("Meetings:");
-                        foreach (var item in meetings)
-                        {
-                            Console.WriteLine(string.Format("ID: {0}, StartDate: {1}, StartTime: {2}, Location: {3}",
-                                item.Id, item.startDateTime.Date, item.startDateTime.TimeOfDay, item.Location));
-                        }
+                        DisplayMeetings(meetings);
 
                         var reminders = reminderRepository.GetAllItems();
-                        Console.WriteLine("Reminders:");
-                        foreach (var item in reminders)
-                        {
-                            Console.WriteLine(string.Format("ID: {0}, StartDate: {1}, StartTime: {2}",
-                                item.Id, item.startDateTime.Date, item.startDateTime.TimeOfDay));
-                        }
+                        DisplayReminders(reminders);
+
                         break;
                     case ('F'):
+                        Console.WriteLine("Input the start date you wish to surch for.");
+                        var date = RetrieveStartDate();
+
+                        var appointmentsOnDate = appointmentRepository.FindByDate(date);
+                        DisplayAppointments(appointmentsOnDate);
+
+                        var meetingsOnDate = meetingRepository.FindByDate(date);
+                        DisplayMeetings(meetingsOnDate);
+
+                        var remindersOnDate = reminderRepository.FindByDate(date);
+                        DisplayReminders(remindersOnDate);
+
+                        break;
                     case ('D'):
-                        throw new NotImplementedException();
+                        Console.WriteLine("A: Appointment");
+                        Console.WriteLine("M: Meeting");
+                        Console.WriteLine("R: Reminder");
+                        Console.WriteLine();
+                        Console.Write("Select a type:");
+                        var typeToDelete = Console.ReadKey().KeyChar;
+                        Console.Clear();
+
+                        switch (typeToDelete)
+                        {
+                            case ('A'):
+                                var appID = RetrieveID();
+                                appointmentRepository.Delete(appointmentRepository.FindById(appID));
+
+                                break;
+                            case ('M'):
+                                var meetID = RetrieveID();
+                                meetingRepository.Delete(meetingRepository.FindById(meetID));
+
+                                break;
+                            case ('R'):
+                                var reminderID = RetrieveID();
+                                reminderRepository.Delete(reminderRepository.FindById(reminderID));
+
+                                break;
+                            default:
+                                Console.WriteLine($"Invalid Option {selectedOption}, press any key to continue.");
+                                Console.Read();
+                                break;
+                        }
+
                         break;
                     default:
                         Console.WriteLine($"Invalid Option {selectedOption}, press any key to continue.");
@@ -186,6 +215,53 @@ namespace CodeLou.CSharp.Week3.Challenge
             File.WriteAllText("Appointments.json", appointmentRepository.ToJson());
             File.WriteAllText("Meetings.json", meetingRepository.ToJson());
             File.WriteAllText("Reminders.json", reminderRepository.ToJson());
+        }
+
+        private static int RetrieveID()
+        {
+            int convertedId;
+            while (true)
+            {
+                Console.WriteLine("Please enter the ID of the Appointment to delete:");
+                var id = Console.ReadLine();
+                if (int.TryParse(id, out convertedId))
+                {
+                    break;
+                }
+                continue;
+            }
+
+            return convertedId;
+        }
+
+        private static void DisplayReminders(IEnumerable<Reminder> reminders)
+        {
+            Console.WriteLine("Reminders:");
+            foreach (var item in reminders)
+            {
+                Console.WriteLine(string.Format("ID: {0}, StartDate: {1}, StartTime: {2}",
+                    item.Id, item.startDateTime.Date, item.startDateTime.TimeOfDay));
+            }
+        }
+
+        private static void DisplayMeetings(IEnumerable<Meeting> meetings)
+        {
+            Console.WriteLine("Meetings:");
+            foreach (var item in meetings)
+            {
+                Console.WriteLine(string.Format("ID: {0}, StartDate: {1}, StartTime: {2}, Location: {3}",
+                    item.Id, item.startDateTime.Date, item.startDateTime.TimeOfDay, item.Location));
+            }
+        }
+
+        private static void DisplayAppointments(IEnumerable<Appointment> appointments)
+        {
+            Console.WriteLine("Appointments:");
+            foreach (var item in appointments)
+            {
+                Console.WriteLine(string.Format("ID: {0}, StartDate: {1}, StartTime: {2}, Location: {3}",
+                    item.Id, item.startDateTime.Date, item.startDateTime.TimeOfDay, item.Location));
+            }
         }
 
         private static List<string> RetrieveAttendees()
