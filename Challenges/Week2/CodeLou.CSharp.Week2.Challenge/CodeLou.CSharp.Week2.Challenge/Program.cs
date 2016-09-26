@@ -67,6 +67,7 @@ namespace CodeLou.CSharp.Week2.Challenge
                 Console.WriteLine("\"" + countMax + "\" is not a valid input.");
             }
 
+
             Console.WriteLine("Press <Enter> to exit...");
             Console.ReadLine();
         }
