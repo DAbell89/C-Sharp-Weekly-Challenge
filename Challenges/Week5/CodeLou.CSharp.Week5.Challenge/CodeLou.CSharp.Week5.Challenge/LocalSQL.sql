@@ -1,4 +1,12 @@
 ﻿-- Notice slight differences between MSSQL and MySQL. It's mostly the same, just a little different syntax.
+IF DB_ID(N'CodeLouisville') IS NULL
+BEGIN
+	CREATE DATABASE CodeLouisville;
+END
+GO
+
+USE CodeLouisville
+GO
 
 IF NOT EXISTS (SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Position')
 BEGIN
@@ -31,7 +39,6 @@ CREATE TABLE Department
     FloorId INT NOT NULL,
     DepartmentName VARCHAR(100) NOT NULL,
     PRIMARY KEY (Id),
-    INDEX department_floor_idx (FloorId), -- foreign key index
     CONSTRAINT department_floor FOREIGN KEY (FloorId) REFERENCES [Floor] (Id)
 )
 END
@@ -53,9 +60,7 @@ CREATE TABLE Employee
     TerminationDate DATETIME,
     StartTime VARCHAR(10) NOT NULL,
     ActiveEmployee BIT NOT NULL DEFAULT '0',
-    PRIMARY KEY (Id), 
-    INDEX employee_position_idx (PositionId), -- foreign key index
-    INDEX employee_department_idx (DepartmentId), -- foreign key index
+    PRIMARY KEY (Id),
     
     -- add a constraint that a record must have this value to be inserted, so and employee corresponds to a position, must be a unique name. 
     -- this is saying that PositionId in this table references employee_position's Id (Primary Key)

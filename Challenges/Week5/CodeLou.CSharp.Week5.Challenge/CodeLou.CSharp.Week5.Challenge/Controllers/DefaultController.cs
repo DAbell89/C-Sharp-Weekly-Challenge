@@ -42,22 +42,27 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
             #endregion
 
             // TODO: How to we order the data by a column, enable sorting?
-            ViewBag.EnableSorting = false;
+            ViewBag.EnableSorting = true;
             if (!String.IsNullOrEmpty(OrderBy))
             {
-                // sql += ??
+                 sql += String.Format($@" ORDER BY {OrderBy} {OrderDirection}");
                 // TODO: Bonus - How do we persist the OrderDirection?
             }
 
             List<Employee> allEmployees = repository.GetEmployees(sql);
             return View(allEmployees);
         }
+
         // GET: Detail
         public ActionResult Details(int id)
         {
-            // TODO: Create View For Details and return employee model to view
-            return View();
+            SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
+            string sql = String.Format("SELECT * FROM Employee WHERE Id = {0}", id);
+
+            Employee employee = repository.GetOneEmployee(sql);
+            return View(employee);
         }
+
         // GET: Edit
         public ActionResult Edit(int id)
         {
@@ -69,6 +74,7 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
 
             return View(employee);
         }
+
         // POST: Edit
         [HttpPost]        
         public ActionResult Edit(Employee employee)
@@ -119,33 +125,63 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
             
             return RedirectToAction("Index");
         }
+
         // GET: Delete
         public ActionResult Delete(int id)
         {
             // TODO: Create View For Delete and return employee model to view
-            return View();
+            SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
+            string sql = String.Format("SELECT * FROM Employee WHERE Id = {0}", id);
+
+            Employee employee = repository.GetOneEmployee(sql);
+            return View(employee);
         }
+
         // POST: Delete
         [HttpPost]
         public ActionResult Delete(Employee employee)
         {
-            // TODO: Delete employee from the database and redirect to list
-            return View();
+            SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
+            string sql = String.Format("DELETE FROM Employee WHERE Id = {0}", employee.Id);
+            repository.DeleteEmplyee(sql);
+
+            return RedirectToAction("Index");
         }
+
         // GET: Create
         public ActionResult Create()
         {
             return View();
         }
+
         // POST: Create
         [HttpPost]
         public ActionResult Create(Employee employee)
         {
             // Hint: This method will be similar to the update method.
             // Hint: for now set the Position and Department to Id 1
-            
+
             // TODO: Create employee from form submission, redirect to list
-            return View();
+
+            SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
+
+            int active = 0;
+            if (employee.ActiveEmployee)
+            {
+                active = 1;
+            }
+
+
+            string sql = String.Format($@"INSERT INTO Employee (PositionId, DepartmentId, FirstName, LastName, Email, Phone, Extension, HireDate, StartTime, ActiveEmployee)
+VALUES (1,1,'{employee.FirstName}','{employee.LastName}','{employee.EMail}','{employee.Phone}', '{employee.Extension}', '{employee.HireDate.ToString()}', '{employee.StartTime}', '{active}');");
+
+
+            // Note: if you want to see what your string says all combined, set a breakpoint and debug your code.
+            // While in debug mode you can hover over a variable to see it's value. Or right click on it and
+            // select Quick Watch.
+
+            repository.CreateEmployee(sql);
+            return RedirectToAction("Index");
         }        
     }    
 }

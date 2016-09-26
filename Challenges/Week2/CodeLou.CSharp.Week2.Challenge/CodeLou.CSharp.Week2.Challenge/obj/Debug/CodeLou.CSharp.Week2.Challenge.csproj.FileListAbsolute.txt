@@ -6,3 +6,9 @@ D:\CodeLouisville\C-Sharp-Weekly-Challenge\C-Sharp-Weekly-Challenge\Challenges\W
 D:\CodeLouisville\C-Sharp-Weekly-Challenge\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\obj\Debug\CodeLou.CSharp.Week2.Challenge.csprojResolveAssemblyReference.cache
 D:\CodeLouisville\C-Sharp-Weekly-Challenge\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\obj\Debug\CodeLou.CSharp.Week2.Challenge.exe
 D:\CodeLouisville\C-Sharp-Weekly-Challenge\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\obj\Debug\CodeLou.CSharp.Week2.Challenge.pdb
+D:\CodeLouisville\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\bin\Debug\CodeLou.CSharp.Week2.Challenge.exe.config
+D:\CodeLouisville\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\obj\Debug\CodeLou.CSharp.Week2.Challenge.exe
+D:\CodeLouisville\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\obj\Debug\CodeLou.CSharp.Week2.Challenge.pdb
+D:\CodeLouisville\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\bin\Debug\CodeLou.CSharp.Week2.Challenge.exe
+D:\CodeLouisville\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\bin\Debug\CodeLou.CSharp.Week2.Challenge.pdb
+D:\CodeLouisville\C-Sharp-Weekly-Challenge\Challenges\Week2\CodeLou.CSharp.Week2.Challenge\CodeLou.CSharp.Week2.Challenge\obj\Debug\CodeLou.CSharp.Week2.Challenge.csprojResolveAssemblyReference.cache
