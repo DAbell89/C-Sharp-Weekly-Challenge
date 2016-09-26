@@ -237,7 +237,7 @@ namespace CodeLou.CSharp.Week5.Challenge
                                 // our employee on the Department table and Position table then we get that information to display
 
                                 // TODO: Bonus - Joining another table. Uncomment these lines for this bonus
-                                /*if (row["DepartmentName"] != DBNull.Value)
+                                if (row["DepartmentName"] != DBNull.Value)
                                 {
                                     employee.DepartmentName = row["DepartmentName"].ToString();
                                 }
@@ -245,7 +245,7 @@ namespace CodeLou.CSharp.Week5.Challenge
                                 if (row["PositionName"] != DBNull.Value)
                                 {
                                     employee.PositionName = row["PositionName"].ToString();
-                                }*/
+                                }
                                 #endregion
 
                                 // add the employee to the list of employees

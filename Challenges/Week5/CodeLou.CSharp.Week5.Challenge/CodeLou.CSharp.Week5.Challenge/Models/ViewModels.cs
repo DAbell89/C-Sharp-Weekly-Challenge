@@ -16,8 +16,8 @@ namespace CodeLou.CSharp.Week5.Challenge.Models
     public class Department
     {
         [ScaffoldColumn(false)]
-        public int Id { get; set; }   
-             
+        public int Id { get; set; }
+
         [ScaffoldColumn(false)]
         public int FloorId { get; set; }
 
@@ -35,7 +35,7 @@ namespace CodeLou.CSharp.Week5.Challenge.Models
 
         [ScaffoldColumn(false)]
         public int? DepartmentId { get; set; }
-        
+
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -74,14 +74,14 @@ namespace CodeLou.CSharp.Week5.Challenge.Models
         public bool ActiveEmployee { get; set; }
 
         #region Bonus - Joining another table
-        // TODO: Bonus - Joining another table. Uncomment these lines for this bonus
-        //[Display(Name = "Department")]
-        //[ScaffoldColumn(false)]
-        //public string DepartmentName { get; set; }
+        //TODO: Bonus - Joining another table.Uncomment these lines for this bonus
+        [Display(Name = "Department")]
+        [ScaffoldColumn(false)]
+        public string DepartmentName { get; set; }
 
-        //[Display(Name = "Position")]
-        //[ScaffoldColumn(false)]
-        //public string PositionName { get; set; }
+        [Display(Name = "Position")]
+        [ScaffoldColumn(false)]
+        public string PositionName { get; set; }
         #endregion
     }
     public class Floor
@@ -96,7 +96,7 @@ namespace CodeLou.CSharp.Week5.Challenge.Models
         [Required]
         [Display(Name = "Floor Name")]
         public string FloorName { get; set; }
-    }    
+    }
     public class Position
     {
         [ScaffoldColumn(false)]

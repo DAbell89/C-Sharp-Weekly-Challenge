@@ -32,7 +32,7 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
             // Create a list of employees to return to the view based on our SQL statement
 
             // Basic select statement, however we do not get all the information we need.
-            string sql = "SELECT * FROM Employee";
+            string sql = "SELECT * FROM Employee, Position, Department WHERE Employee.PositionId = Position.Id AND Employee.DepartmentId = Department.Id";
 
             #region Bonus - Joining another table
             // TODO: Bonus - Joining another table
