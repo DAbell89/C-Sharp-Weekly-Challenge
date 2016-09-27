@@ -259,6 +259,106 @@ namespace CodeLou.CSharp.Week5.Challenge
 
             return allEmployees;
         }
-        
+
+        /// <summary>
+        /// Get all Positions
+        /// </summary>
+        /// <returns>List of Positions</returns>
+        public List<Position> GetAllPositions()
+        {
+            // Create a list of employees to return to the view
+            List<Position> allPositions = new List<Position>();
+
+            // Connection to your SQL server, MySql, MsSql, Local MDF File
+            using (SqlConnection connection = new SqlConnection(_ConnectionString))
+            {
+                // The SQL command you want to run on your server to get data back
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Position", connection))
+                {
+                    // The adapter that is responsible for connecting to the database and getting the data
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        // This is the variable that will contain all of your data returned to you
+                        DataSet dataSet = new DataSet();
+
+                        // Fill the dataset
+                        adapter.Fill(dataSet);
+
+                        // First lets check to see if we have any data
+                        if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                        {
+                            // loop through all the rows
+                            foreach (DataRow row in dataSet.Tables[0].Rows)
+                            {
+                                // new Position
+                                // the column names are the same as our properties for ease of use
+                                // it's best to do this so you don't have to guess what property maps to what column
+
+                                // also be sure to match up the datatypes from SQL. You'll have to convert INT and Dates etc.
+                                Position position = new Position();
+                                position.Id = Convert.ToInt32(row["Id"]);
+                                position.PositionName = row["PositionName"].ToString();
+
+                                // add the position to the list of employees
+                                allPositions.Add(position);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return allPositions;
+        }
+
+        /// <summary>
+        /// Get all Positions
+        /// </summary>
+        /// <returns>List of Positions</returns>
+        public List<Department> GetAllDepartments()
+        {
+            // Create a list of departments to return to the view
+            List<Department> allDepartments = new List<Department>();
+
+            // Connection to your SQL server, MySql, MsSql, Local MDF File
+            using (SqlConnection connection = new SqlConnection(_ConnectionString))
+            {
+                // The SQL command you want to run on your server to get data back
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Department", connection))
+                {
+                    // The adapter that is responsible for connecting to the database and getting the data
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        // This is the variable that will contain all of your data returned to you
+                        DataSet dataSet = new DataSet();
+
+                        // Fill the dataset
+                        adapter.Fill(dataSet);
+
+                        // First lets check to see if we have any data
+                        if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
+                        {
+                            // loop through all the rows
+                            foreach (DataRow row in dataSet.Tables[0].Rows)
+                            {
+                                // new Department
+                                // the column names are the same as our properties for ease of use
+                                // it's best to do this so you don't have to guess what property maps to what column
+
+                                // also be sure to match up the datatypes from SQL. You'll have to convert INT and Dates etc.
+                                Department department = new Department();
+                                department.Id = Convert.ToInt32(row["Id"]);
+                                department.DepartmentName = row["DepartmentName"].ToString();
+
+                                // add the department to the list of employees
+                                allDepartments.Add(department);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return allDepartments;
+        }
+
     }
 }

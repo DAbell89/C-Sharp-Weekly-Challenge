@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CodeLou.CSharp.Week5.Challenge.Models
 {
@@ -27,14 +28,27 @@ namespace CodeLou.CSharp.Week5.Challenge.Models
     }
     public class Employee
     {
+        public List<Position> _positions;
+        public List<Department> _departments;
+
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
         [ScaffoldColumn(false)]
         public int PositionId { get; set; }
 
+        public IEnumerable<SelectListItem> Positions
+        {
+            get { return new SelectList(_positions, "Id", "PositionName"); }
+        }
+
         [ScaffoldColumn(false)]
         public int? DepartmentId { get; set; }
+
+        public IEnumerable<SelectListItem> Departments
+        {
+            get { return new SelectList(_departments, "Id", "DepartmentName"); }
+        }
 
         [Required]
         [Display(Name = "First Name")]

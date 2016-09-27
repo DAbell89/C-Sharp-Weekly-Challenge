@@ -67,10 +67,12 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
         public ActionResult Edit(int id)
         {
             SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
-            string sql = String.Format("SELECT * FROM Employee WHERE Id = {0}", id);        
+            string sql = String.Format("SELECT * FROM Employee, Position, Department WHERE Employee.PositionId = Position.Id AND Employee.DepartmentId = Department.Id AND Employee.Id = {0}", id);
 
             Employee employee = repository.GetOneEmployee(sql);
             ViewBag.EmployeeFullName = String.Format("{0} {1}", employee.FirstName, employee.LastName);
+            employee._positions = repository.GetAllPositions();
+            employee._departments = repository.GetAllDepartments();
 
             return View(employee);
         }
@@ -151,7 +153,13 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
         // GET: Create
         public ActionResult Create()
         {
-            return View();
+            SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
+
+            var employee = new Employee();
+            employee._positions = repository.GetAllPositions();
+            employee._departments = repository.GetAllDepartments();
+
+            return View(employee);
         }
 
         // POST: Create
@@ -173,7 +181,7 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
 
 
             string sql = String.Format($@"INSERT INTO Employee (PositionId, DepartmentId, FirstName, LastName, Email, Phone, Extension, HireDate, StartTime, ActiveEmployee)
-VALUES (1,1,'{employee.FirstName}','{employee.LastName}','{employee.EMail}','{employee.Phone}', '{employee.Extension}', '{employee.HireDate.ToString()}', '{employee.StartTime}', '{active}');");
+VALUES ({employee.PositionId},{employee.DepartmentId},'{employee.FirstName}','{employee.LastName}','{employee.EMail}','{employee.Phone}', '{employee.Extension}', '{employee.HireDate.ToString()}', '{employee.StartTime}', '{active}');");
 
 
             // Note: if you want to see what your string says all combined, set a breakpoint and debug your code.
