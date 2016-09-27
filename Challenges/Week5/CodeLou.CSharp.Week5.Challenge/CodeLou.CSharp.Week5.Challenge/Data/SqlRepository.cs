@@ -148,7 +148,7 @@ namespace CodeLou.CSharp.Week5.Challenge
 
                             #region Bonus - Joining another table
                             // TODO: Bonus - Joining another table. Uncomment these lines for this bonus
-                            /*if (row["DepartmentName"] != DBNull.Value)
+                            if (row["DepartmentName"] != DBNull.Value)
                             {
                                 employee.DepartmentName = row["DepartmentName"].ToString();
                             }
@@ -156,7 +156,7 @@ namespace CodeLou.CSharp.Week5.Challenge
                             if (row["PositionName"] != DBNull.Value)
                             {
                                 employee.PositionName = row["PositionName"].ToString();
-                            }*/
+                            }
                             #endregion
 
                             #endregion

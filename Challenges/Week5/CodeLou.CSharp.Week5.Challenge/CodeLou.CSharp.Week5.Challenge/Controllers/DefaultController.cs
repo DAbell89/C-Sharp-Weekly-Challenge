@@ -57,7 +57,7 @@ namespace CodeLou.CSharp.Week5.Challenge.Controllers
         public ActionResult Details(int id)
         {
             SqlRepository repository = new SqlRepository(_LocalFileConnectionString);
-            string sql = String.Format("SELECT * FROM Employee WHERE Id = {0}", id);
+            string sql = String.Format("SELECT * FROM Employee, Position, Department WHERE Employee.PositionId = Position.Id AND Employee.DepartmentId = Department.Id AND Employee.Id = {0}", id);
 
             Employee employee = repository.GetOneEmployee(sql);
             return View(employee);
