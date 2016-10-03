@@ -24,22 +24,45 @@ namespace LinqChallenge
 
             NewQuestion();
             Console.WriteLine("What are the airports in Louisville?");
+            var louisvilleAir = Airports.Where(x => x.City == "Louisville");
+
+            foreach (var airport in louisvilleAir)
+            {
+                Console.WriteLine(airport.AirportName);
+            }
 
             NewQuestion();
 
             Console.WriteLine("What is the Latitude/Longitude of KSDF?");
 
+            var ksdf = Airports.FirstOrDefault(x => x.ICAO == "KSDF");
+
+            Console.WriteLine(string.Format("Latitude: {0}, Longitude: {1}", ksdf.Latitude, ksdf.Longitude));
+
             NewQuestion();
 
             Console.WriteLine("How many routes originate in in louisville? ");
+            var louIDs = louisvilleAir.Select(x => x.AirportId);
+            var louOriginRoutes = Routes.Where(x => louIDs.Contains(x.SourceAirportId)).ToList();
+            Console.WriteLine(louOriginRoutes.Count);
 
             NewQuestion();
 
             Console.WriteLine("How many routes terminate in Louisville?");
 
+            var louTermRoutes = Routes.Where(x => louIDs.Contains(x.DestinationAirportId)).ToList();
+            Console.WriteLine(louTermRoutes.Count);
+
             NewQuestion();
 
             Console.WriteLine("Give me a list of Countries and how many airports in each country, as long as they have more than 100 airports?");
+
+            var byCountry = Airports.GroupBy(x => x.Country).Where(y => y.Count() > 100);
+
+            foreach (var country in byCountry)
+            {
+                Console.WriteLine(string.Format("{0}: {1} airports", country.Key, country.Count()));
+            }
 
             // If you get this far, this is probably good enough skills for being able to do your class project. 
             // But if you want to challenge yourself, keep on! 
@@ -49,16 +72,58 @@ namespace LinqChallenge
             Console.WriteLine("Of the flights that leave Louisville, where do they go and which airline? I want sorted Airport Names, Airline");
             // hint 1:  Join once 
             // hint 2:  then join again 
-            
+            var routAirlinesJoin = louOriginRoutes.Join(Airlines,
+                routes => routes.AirlineId,
+                airlines => airlines.AirlineId, 
+                (routes, airlines) => new
+                {
+                    DestinationAirport = routes.DestinationAirport,
+                    AirlineName = airlines.AirlineName,
+                    DestinationAirportId = routes.DestinationAirportId
+                });
+
+            var airportsJoin = routAirlinesJoin.Join(Airports,
+                join => join.DestinationAirportId,
+                airports => airports.AirportId,
+                (join, airports) => new
+                {
+                    DestinationAirport = join.DestinationAirport,
+                    AirlineName = join.AirlineName,
+                    AirportName = airports.AirportName
+                });
+
+            var sorted = airportsJoin.OrderBy(x => x.AirlineName).OrderBy(x => x.AirportName);
+
+            foreach (var item in sorted)
+            {
+                Console.WriteLine(string.Format("{0} via {1}", item.AirportName, item.AirlineName));
+            }
+
             NewQuestion();
 
             Console.WriteLine("Which 5 airports are have the most flights taking off? (and how many flights)");
             Console.WriteLine("I want airport name and number of flights.");
 
             // hint 1: calculate number of flights taking off per airport id
+            var flights = Routes.GroupBy(x => x.SourceAirportId);
             // hint 2: join to airports
             // hint 3: order by descending
+            var airportJoin = Airports.Join(flights, 
+                x => x.AirportId, 
+                y => y.Key, 
+                (x, y) => new
+                {
+                    Name = x.AirportName,
+                    NumberOfFlights = y.Count()
+                }).OrderByDescending(x => x.NumberOfFlights);
             // hint 4: take 5
+
+            var topFive = airportJoin.Take(5);
+
+            foreach (var airport in topFive)
+            {
+                Console.WriteLine(string.Format("{0}: {1}", airport.Name, airport.NumberOfFlights));
+            }
 
             // note -- if you start at airports and then try to do a count of routes, you hit an O(N^2) that causes some CPU spikeing. 
             // note -- another complexity is could have "most flights (taking off or landing)" -- that's more calculation and more joining.
